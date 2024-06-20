@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">BJTU_PlantCapture</string>
+    <string name="submit">Capture</string>
+    <string name="ok">Done</string>
+</resources>
