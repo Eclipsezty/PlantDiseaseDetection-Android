@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,6 +23,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView replyMsg;
     ImageView img_photo;
-    private Button capture;
-    private Button openAlbum;
+    private ImageButton capture;
+    private ImageButton openAlbum;
     final int TAKE_PHOTO = 1;
     Uri imageUri;
     File outputImage;
@@ -90,11 +92,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+//    @SuppressLint("WrongViewCast")
     private void initViews() {
         img_photo = findViewById(R.id.img_photo);
         replyMsg = findViewById(R.id.replyMsg);
         capture = findViewById(R.id.capture);
         openAlbum = findViewById(R.id.openAlbum);
+
+        replyMsg.setText("欢迎使用水稻疾病检测系统"); // Set default display text
+        img_photo.setImageResource(R.mipmap.sample_leaf); // Set default display image
     }
 
     private void openAlbum() {
@@ -263,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void startNetThread1() {
-        replyMsg.setText("Loading...");
+        replyMsg.setText("检测中...");
 
         new Thread() {
             @RequiresApi(api = Build.VERSION_CODES.O)
