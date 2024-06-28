@@ -13,28 +13,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.75" />
+        app:layout_constraintGuide_percent="0.80" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.90" />
+        app:layout_constraintGuide_percent="0.95" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.0" /> <!-- Move this guideline to adjust the left margin -->
+        app:layout_constraintGuide_percent="0.05" /> <!-- Move this guideline to adjust the left margin -->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineRight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="1.0" />
+        app:layout_constraintGuide_percent="0.95" />
 
 <!--    <ImageView-->
 <!--        android:id="@+id/img_photo"-->
@@ -47,16 +47,28 @@
 <!--        &lt;!&ndash;tools:ignore="MissingConstraints"&ndash;&gt;-->
 <!--        />-->
 
+<!--    <ImageView-->
+<!--        android:id="@+id/img_photo"-->
+<!--        android:layout_width="450dp"-->
+<!--        android:layout_height="450dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/capture"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/replyMsg" />-->
+<!--    &lt;!&ndash;tools:ignore="MissingConstraints"&ndash;&gt;-->
+<!--    />-->
+
+
     <ImageView
         android:id="@+id/img_photo"
-        android:layout_width="350dp"
-        android:layout_height="350dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/imageview_border"
+        app:layout_constraintDimensionRatio="5:6"
         app:layout_constraintBottom_toTopOf="@id/capture"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
+        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@+id/replyMsg" />
-    <!--tools:ignore="MissingConstraints"-->
-    />
 
 <!--    <ImageView-->
 <!--        android:id="@+id/img_photo"-->
@@ -75,13 +87,14 @@
         android:id="@+id/replyMsg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/underline"
+        android:background="@color/green_200"
         android:gravity="center"
-        android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textColor="@color/grey_text"
+        android:textSize="20sp"
+        android:padding="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.1"
+        app:layout_constraintVertical_bias="0"
         tools:layout_editor_absoluteX="0dp" />
 
 <!--    <ImageButton-->
@@ -104,8 +117,8 @@
         android:layout_height="wrap_content"
         android:background="@mipmap/icon_camera"
         android:padding="0dp"
-        android:scaleX="0.8"
-        android:scaleY="0.8"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
         app:layout_constraintStart_toEndOf="@+id/guidelineLeft"
         app:layout_constraintTop_toTopOf="@+id/guideline0"
         app:layout_constraintEnd_toStartOf="@+id/openAlbum"
@@ -118,11 +131,12 @@
         android:layout_height="wrap_content"
         android:background="@mipmap/icon_album"
         android:padding="0dp"
-        android:scaleX="0.8"
-        android:scaleY="0.8"
+        android:scaleX="0.7"
+        android:scaleY="0.7"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toStartOf="@+id/guidelineRight"
-        app:layout_constraintTop_toTopOf="@+id/guideline0"
         app:layout_constraintStart_toEndOf="@+id/capture"
-        app:layout_constraintBottom_toTopOf="@+id/guideline2" />
+        app:layout_constraintTop_toTopOf="@+id/guideline0"
+        app:layout_constraintVertical_bias="0.5" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

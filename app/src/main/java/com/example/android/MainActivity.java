@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.setTitle("Plant Disease Detect System");
+        this.setTitle("稻田健康管家");
         Intent intent =getIntent();
 
         initViews();
@@ -345,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
                 // Toast也是属于UI的更新
                 Toast.makeText(getApplicationContext(), "*****", Toast.LENGTH_LONG).show();
             }else if (msg.what == UPDATE_ok){
-                Toast.makeText(getApplicationContext(), "Connected to Server", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "开始检测", Toast.LENGTH_LONG).show();
             }
         }
     };

@@ -18,13 +18,13 @@ public class SplashActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_splash);
 
-        Toast.makeText(getApplicationContext(), "Welcome to BJTU Plant Disease Detect System", Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), "欢迎使用稻田健康管家", Toast.LENGTH_LONG).show();
 
         Thread myThread=new Thread(){//创建子线程
             @Override
             public void run() {
                 try{
-                    sleep(3000);
+                    sleep(2000);
                     Intent it=new Intent(getApplicationContext(),MainActivity.class);
                     startActivity(it);
                     finish();

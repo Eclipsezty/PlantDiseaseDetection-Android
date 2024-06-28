@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Border definition -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@android:color/transparent" /> <!-- Transparent background -->
+
+            <stroke
+                android:width="3dp"
+                android:color="#00CD66" /> <!-- Red border -->
+            <padding
+                android:left="3dp"
+                android:top="3dp"
+                android:right="3dp"
+                android:bottom="3dp" />
+        </shape>
+    </item>
+    <!-- Image content -->
+    <item>
+        <bitmap
+            android:src="@drawable/white_bg"
+        android:gravity="fill" />
+    </item>
+</layer-list>
