@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     final int TAKE_PHOTO = 1;
     Uri imageUri;
     File outputImage;
-    static String ipAddress = "192.168.192.217";
+    public static String ipAddress = "192.168.192.217";
     static int portNumber = 6666;
 
     public static final int REQUEST_CODE_ALBUM = 102; //album
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         capture = findViewById(R.id.capture);
         openAlbum = findViewById(R.id.openAlbum);
 
-        replyMsg.setText("欢迎使用水稻疾病检测系统"); // Set default display text
+        replyMsg.setText("水稻疾病检测系统"); // Set default display text
         img_photo.setImageResource(R.mipmap.sample_leaf); // Set default display image
     }
 

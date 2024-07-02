@@ -15,7 +15,6 @@ public class GetValue extends AppCompatActivity {
 
     private EditText ip,port;
     private Button over;
-    static String ipAddress = " 192.168.224.217";
     static String portNumber = "6666";
     public String ipText;
     public String portText;
@@ -43,14 +42,14 @@ public class GetValue extends AppCompatActivity {
         over.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //MainActivity.setIP(ipText);
-                //MainActivity.setPort((parseInt(portText)));
+//                MainActivity.setIP(ipText);
+//                MainActivity.setPort((parseInt(portText)));
                 initEvent();
-                ipAddress=ipText;
+                MainActivity.ipAddress=ipText;
                 portNumber=portText;
-                Toast.makeText(getApplicationContext(), "Change Success", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "设置成功", Toast.LENGTH_LONG).show();
                 Intent it=new Intent(GetValue.this,MainActivity.class);//启动MainActivity
-                it.putExtra("ip", ipAddress);
+                it.putExtra("ip", MainActivity.ipAddress);
                 it.putExtra("port", portNumber);
                 startActivity(it);
             }
