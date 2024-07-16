@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Android">
         <activity
+            android:name=".MenuActivity"
+            android:exported="false" />
+        <activity
             android:name=".GetValue"
             android:exported="false" />
         <activity
@@ -23,10 +26,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-<!--        <activity android:name=".GetValue"-->
-<!--            tools:ignore="DuplicateActivity" />-->
-        <activity android:name=".MainActivity" />
+        </activity> <!-- <activity android:name=".GetValue" -->
+        <!-- tools:ignore="DuplicateActivity" /> -->
+        <activity android:name=".DiseaseDetectActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

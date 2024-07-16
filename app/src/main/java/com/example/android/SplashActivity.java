@@ -3,11 +3,8 @@ package com.example.android;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.WindowManager;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class SplashActivity extends AppCompatActivity {
@@ -25,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 try{
                     sleep(2000);
-                    Intent it=new Intent(getApplicationContext(),MainActivity.class);
+                    Intent it=new Intent(getApplicationContext(), DiseaseDetectActivity.class);
                     startActivity(it);
                     finish();
                 }catch (Exception e){

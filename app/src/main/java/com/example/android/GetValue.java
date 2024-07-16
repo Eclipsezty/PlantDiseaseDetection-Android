@@ -45,11 +45,11 @@ public class GetValue extends AppCompatActivity {
 //                MainActivity.setIP(ipText);
 //                MainActivity.setPort((parseInt(portText)));
                 initEvent();
-                MainActivity.ipAddress=ipText;
+                DiseaseDetectActivity.ipAddress=ipText;
                 portNumber=portText;
                 Toast.makeText(getApplicationContext(), "设置成功", Toast.LENGTH_LONG).show();
-                Intent it=new Intent(GetValue.this,MainActivity.class);//启动MainActivity
-                it.putExtra("ip", MainActivity.ipAddress);
+                Intent it=new Intent(GetValue.this, DiseaseDetectActivity.class);//启动MainActivity
+                it.putExtra("ip", DiseaseDetectActivity.ipAddress);
                 it.putExtra("port", portNumber);
                 startActivity(it);
             }

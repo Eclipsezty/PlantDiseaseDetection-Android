@@ -7,7 +7,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -22,7 +21,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -41,7 +39,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class MainActivity extends AppCompatActivity {
+public class DiseaseDetectActivity extends AppCompatActivity {
 
     private TextView replyMsg;
     ImageView img_photo;
@@ -50,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     final int TAKE_PHOTO = 1;
     Uri imageUri;
     File outputImage;
-    public static String ipAddress = "192.168.192.217";
+    public static String ipAddress = "192.168.206.217";
     static int portNumber = 6666;
 
     public static final int REQUEST_CODE_ALBUM = 102; //album
@@ -62,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_disease_detect);
 
         this.setTitle("稻田健康管家");
         Intent intent =getIntent();
@@ -79,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.configNet:
-                Intent it=new Intent(MainActivity.this,GetValue.class);//MainActivity
+                Intent it=new Intent(DiseaseDetectActivity.this,GetValue.class);//MainActivity
                 startActivity(it);
 
                 break;
@@ -122,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 if (Build.VERSION.SDK_INT >= 24) {
-                    imageUri = FileProvider.getUriForFile(MainActivity.this, "com.example.android.fileprovider", outputImage);
+                    imageUri = FileProvider.getUriForFile(DiseaseDetectActivity.this, "com.example.android.fileprovider", outputImage);
                 } else {
                     imageUri = Uri.fromFile(outputImage);
                 }

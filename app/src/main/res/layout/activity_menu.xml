@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MenuActivity">
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.1" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.3" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.4" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.6" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.7" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.9" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.25" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="73dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.75" />
+
+        <ImageButton
+            android:id="@+id/weather"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#00000000"
+            android:elevation="10dp"
+            android:scaleType="centerInside"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            android:src="@drawable/menu_weather"
+            android:translationX="-8dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline3"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="@id/guideline11"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@id/guideline1" />
+
+        <ImageButton
+            android:id="@+id/market"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#00000000"
+            android:elevation="50dp"
+            android:scaleType="centerInside"
+            android:scaleX="1"
+            android:scaleY="1"
+            android:src="@drawable/menu_market"
+            android:translationX="5dp"
+            android:translationY="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline3"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="@id/guideline13"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@id/guideline12" />
+
+        <ImageButton
+            android:id="@+id/reminder"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#00000000"
+            android:elevation="10dp"
+            android:scaleType="centerInside"
+            android:scaleX="1"
+            android:scaleY="1"
+            android:src="@drawable/menu_reminder"
+            app:layout_constraintBottom_toTopOf="@+id/guideline3"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintStart_toStartOf="@id/guideline14" />
+
+
+        <ImageButton
+            android:id="@+id/health"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#00000000"
+            android:scaleType="centerInside"
+            android:scaleX="1.1"
+            android:scaleY="1.1"
+            android:src="@drawable/menu_health"
+            app:layout_constraintBottom_toTopOf="@+id/guideline5"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="@id/guideline11"
+            app:layout_constraintStart_toStartOf="@id/guideline1" />
+
+
+        <ImageButton
+            android:id="@+id/instant"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#00000000"
+            android:scaleType="centerInside"
+            android:scaleX="0.9"
+            android:scaleY="0.9"
+            android:src="@drawable/menu_instant"
+            app:layout_constraintBottom_toTopOf="@+id/guideline5"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="@id/guideline2"
+            app:layout_constraintStart_toStartOf="@id/guideline14" />
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerInside"
+            android:scaleX="2"
+            android:scaleY="2"
+            android:src="@drawable/logo_agfab"
+            app:layout_constraintBottom_toTopOf="@+id/guideline4"
+            app:layout_constraintDimensionRatio="4:3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/guideline6" />
+
+        <ImageButton
+            android:id="@+id/analysis"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="#00000000"
+            android:scaleType="centerInside"
+            android:scaleX="1"
+            android:scaleY="1"
+            android:src="@drawable/menu_analysis"
+            android:translationX="3dp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline5"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toStartOf="@+id/guideline13"
+            app:layout_constraintStart_toStartOf="@+id/guideline12" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
