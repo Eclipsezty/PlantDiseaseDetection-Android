@@ -79,6 +79,7 @@ public class DiseaseDetectActivity extends AppCompatActivity {
             case R.id.configNet:
                 Intent it=new Intent(DiseaseDetectActivity.this,GetValue.class);//MainActivity
                 startActivity(it);
+                finish();
 
                 break;
             case R.id.lookDst:

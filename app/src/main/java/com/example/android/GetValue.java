@@ -47,11 +47,12 @@ public class GetValue extends AppCompatActivity {
                 initEvent();
                 DiseaseDetectActivity.ipAddress=ipText;
                 portNumber=portText;
-                Toast.makeText(getApplicationContext(), "设置成功", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "网络设置成功", Toast.LENGTH_SHORT).show();
                 Intent it=new Intent(GetValue.this, DiseaseDetectActivity.class);//启动MainActivity
                 it.putExtra("ip", DiseaseDetectActivity.ipAddress);
                 it.putExtra("port", portNumber);
                 startActivity(it);
+                finish();
             }
         });
     }

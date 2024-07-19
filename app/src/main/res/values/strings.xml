@@ -2,4 +2,67 @@
     <string name="app_name">稻田健康管家</string>
     <string name="submit">Capture</string>
     <string name="ok">Done</string>
+    <string name="title_activity_drawer">Main</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="title_activity_login">Login</string>
+    <string name="prompt_username">Username</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_up">Sign up</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+
+    <string name="market">"Market"</string>
+    <string name="input_market">"Purchase Market"</string>
+    <string name="weather">"Weather"</string>
+    <string name="irrigation">"Irrigation</string>
+    <string name="crop_health">"Crop Health"</string>
+    <string name="nutrition">"Nutrition"</string>
+    <string name="op">"Op"</string>
+    <string name="output_market">"Sale Market"</string>
+    <string name="reminder">"Reminder"</string>
+    <string name="analysis">"Cost-Profit Analysis"</string>
+    <string name="instant">"Instant Message"</string>
+    <string name="chat">"Chat"</string>
+    <string name="video">"Video"</string>
+    <string name="news">"News"</string>
+    <string name="machinery">"Machinery"</string>
+    <string name="harsh_weather">"Harsh Weather"</string>
+    <string name="weather_station">"Weather Station"</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="country_prompt">Country</string>
+    <string name="mobile_prompt">Mobile Number</string>
+    <string-array name="countries">
+        <item>USA</item>
+        <item>Canada</item>
+        <item>UK</item>
+        <item>France</item>
+        <item>Germany</item>
+        <item>Japan</item>
+    </string-array>
+
+    <string name="city_prompt">City</string>
+    <string-array name="cities">
+        <item>New York</item>
+        <item>Los Angeles</item>
+        <item>Toronto</item>
+        <item>Paris</item>
+        <item>Berlin</item>
+        <item>Tokyo</item>
+    </string-array>
+
 </resources>
