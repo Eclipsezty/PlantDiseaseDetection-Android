@@ -11,10 +11,12 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.util.Log;
@@ -38,6 +40,15 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import androidx.core.app.ActivityCompat;
+
 
 public class DiseaseDetectActivity extends AppCompatActivity {
 
@@ -48,13 +59,17 @@ public class DiseaseDetectActivity extends AppCompatActivity {
     final int TAKE_PHOTO = 1;
     Uri imageUri;
     File outputImage;
-    public static String ipAddress = "192.168.206.217";
+    public static String ipAddress = "192.168.0.102";
     static int portNumber = 6666;
 
     public static final int REQUEST_CODE_ALBUM = 102; //album
     private static final int UPDATE_ok = 0;
     private static final int UPDATE_UI = 1;
     private static final int ERROR = 2;
+
+    private FusedLocationProviderClient fusedLocationClient;
+    private double latitude = 0.0;
+    private double longitude = 0.0;
 
 
     @Override
@@ -100,6 +115,24 @@ public class DiseaseDetectActivity extends AppCompatActivity {
 
         replyMsg.setText("水稻疾病检测系统"); // Set default display text
         img_photo.setImageResource(R.mipmap.sample_leaf); // Set default display image
+    }
+
+
+    private void getLocation() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
+        }
+
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, location -> {
+                    if (location != null) {
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+                    }
+                });
     }
 
     private void openAlbum() {
@@ -157,8 +190,7 @@ public class DiseaseDetectActivity extends AppCompatActivity {
 
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
                         img_photo.setImageBitmap(bitmap);
-
-                        startNetThread1();
+                        getLocationAndStartNetThread();
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -173,7 +205,7 @@ public class DiseaseDetectActivity extends AppCompatActivity {
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
                         img_photo.setImageBitmap(bitmap);
 
-                        startNetThread1();
+                        getLocationAndStartNetThread();
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -267,27 +299,65 @@ public class DiseaseDetectActivity extends AppCompatActivity {
         return afterBitmap;
     }
 
-    private void startNetThread1() {
+    private void getLocationAndStartNetThread() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            return;
+        }
+
+        fusedLocationClient.getLastLocation()
+                .addOnSuccessListener(this, location -> {
+                    if (location != null) {
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+
+                        // Print latitude and longitude to the console
+                        Log.d("Location", "Latitude: " + latitude + ", Longitude: " + longitude);
+                    } else {
+                        // If location is null, request location updates
+                        LocationRequest locationRequest = LocationRequest.create();
+                        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+                        locationRequest.setInterval(1000); // 1 second interval for a quick location fix
+
+                        fusedLocationClient.requestLocationUpdates(locationRequest, new LocationCallback() {
+                            @Override
+                            public void onLocationResult(LocationResult locationResult) {
+                                fusedLocationClient.removeLocationUpdates(this); // Stop receiving updates after first fix
+                                if (locationResult != null && locationResult.getLocations().size() > 0) {
+                                    Location latestLocation = locationResult.getLastLocation();
+                                    latitude = latestLocation.getLatitude();
+                                    longitude = latestLocation.getLongitude();
+
+                                    // Print the location obtained from requestLocationUpdates
+                                    Log.d("Location", "Latitude: " + latitude + ", Longitude: " + longitude);
+
+                                    // Start the network thread after location is obtained
+                                    startNetThreadWithLocation();
+                                }
+                            }
+                        }, Looper.getMainLooper());
+                    }
+
+                    // If last location was available, start the network thread immediately
+                    if (latitude != 0.0 && longitude != 0.0) {
+                        startNetThreadWithLocation();
+                    }
+                });
+    }
+
+
+    private void startNetThreadWithLocation() {
         replyMsg.setText("检测中...");
 
         new Thread() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             public void run() {
                 try {
-
                     Socket socket = new Socket();
-                    //ipAddress = getIntent().getStringExtra("ip");
-                    //portNumber = parseInt(getIntent().getStringExtra("port"));
                     InetSocketAddress isa = new InetSocketAddress(ipAddress, portNumber);
                     socket.connect(isa, 5000);
-                    //Toast.makeText(getApplicationContext(), ipAddress+":"+portNumber, Toast.LENGTH_LONG).show();
-
-
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
 
                     Message msg1 = new Message();
                     msg1.what = UPDATE_ok;
@@ -297,10 +367,15 @@ public class DiseaseDetectActivity extends AppCompatActivity {
                     OutputStream os = socket.getOutputStream();
                     PrintWriter pw = new PrintWriter(os);
 
+                    // Convert image to Base64
                     Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
-                    String info = bitmapToBase64(bitmap);
+                    String imageBase64 = bitmapToBase64(bitmap);
 
-                    pw.write(info);
+                    // Combine image data and location into a JSON-like format
+                    String dataToSend = imageBase64 + "|" + latitude + "," + longitude;
+
+                    // Send data to the server
+                    pw.write(dataToSend);
                     pw.flush();
 
                     socket.shutdownOutput();
@@ -316,16 +391,14 @@ public class DiseaseDetectActivity extends AppCompatActivity {
                     socket.close();
                     os.close();
                     br.close();
-                } catch (UnknownHostException e) {
-                    e.printStackTrace();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }.start();
     }
+
+
 
     // 主线程创建消息处理器
     Handler handler = new Handler() {
