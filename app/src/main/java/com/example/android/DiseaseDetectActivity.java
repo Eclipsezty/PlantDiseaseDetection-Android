@@ -48,6 +48,10 @@ import com.google.android.gms.location.LocationServices;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import androidx.core.app.ActivityCompat;
+import android.telephony.TelephonyManager;
+import androidx.core.app.ActivityCompat;
+import android.content.pm.PackageManager;
+import android.content.Context;
 
 
 public class DiseaseDetectActivity extends AppCompatActivity {
@@ -70,6 +74,8 @@ public class DiseaseDetectActivity extends AppCompatActivity {
     private FusedLocationProviderClient fusedLocationClient;
     private double latitude = 0.0;
     private double longitude = 0.0;
+    private String phoneNumber = "Unknown";
+
 
 
     @Override
@@ -82,6 +88,7 @@ public class DiseaseDetectActivity extends AppCompatActivity {
 
         initViews();
         initEvent();
+        getPhoneNumber();
     }
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.main, menu);
@@ -116,6 +123,49 @@ public class DiseaseDetectActivity extends AppCompatActivity {
         replyMsg.setText("水稻疾病检测系统"); // Set default display text
         img_photo.setImageResource(R.mipmap.sample_leaf); // Set default display image
     }
+
+    private void getPhoneNumber() {
+        // Request permissions if they are not already granted
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_NUMBERS) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{
+                    Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.READ_SMS,
+                    Manifest.permission.READ_PHONE_NUMBERS
+            }, 2);
+            return;
+        }
+
+        try {
+            // Retrieve phone number if permission is granted
+            TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+            if (telephonyManager != null) {
+                phoneNumber = telephonyManager.getLine1Number();
+                if (phoneNumber == null || phoneNumber.isEmpty()) {
+                    phoneNumber = "Unavailable"; // Fallback if phone number is not accessible
+                }
+            }
+        } catch (SecurityException e) {
+            Log.e("PhoneNumberError", "Error retrieving phone number", e);
+            phoneNumber = "Unavailable"; // Set default value if an error occurs
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 2) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                getPhoneNumber();
+            } else {
+                Toast.makeText(this, "Permission denied to access phone number.", Toast.LENGTH_SHORT).show();
+                phoneNumber = "Unavailable"; // Use fallback if permission is denied
+            }
+        }
+    }
+
 
 
     private void getLocation() {
@@ -371,8 +421,8 @@ public class DiseaseDetectActivity extends AppCompatActivity {
                     Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
                     String imageBase64 = bitmapToBase64(bitmap);
 
-                    // Combine image data and location into a JSON-like format
-                    String dataToSend = imageBase64 + "|" + latitude + "," + longitude;
+                    // Combine image data, location, and phone number
+                    String dataToSend = imageBase64 + "|" + latitude + "," + longitude + "|" + phoneNumber;
 
                     // Send data to the server
                     pw.write(dataToSend);
@@ -382,6 +432,12 @@ public class DiseaseDetectActivity extends AppCompatActivity {
 
                     BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
                     String content = br.readLine();
+                    Log.d("NetworkThread", "Received content: " + content);
+
+//                    if (content == null) {
+//                        content = "No response from server";
+//                    }
+
 
                     Message msg = new Message();
                     msg.what = UPDATE_UI;
@@ -400,26 +456,31 @@ public class DiseaseDetectActivity extends AppCompatActivity {
 
 
 
+
     // 主线程创建消息处理器
     Handler handler = new Handler() {
         // 但有新消息时调用
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == UPDATE_UI) {
-                // 获取消息对象
-                if(msg.obj.equals("0")){
+                // Check if msg.obj is not null before calling .equals
+                if (msg.obj != null && msg.obj.equals("0")) {
                     replyMsg.setText("*****");
-                }else{
+                } else if (msg.obj != null) {
                     String content = (String) msg.obj;
                     replyMsg.setText(content);
+                } else {
+                    // Handle the case where msg.obj is null
+                    replyMsg.setText("No response from server");
+                    Log.e("HandlerError", "msg.obj is null");
                 }
             } else if (msg.what == ERROR) {
-                // Toast也是属于UI的更新
                 Toast.makeText(getApplicationContext(), "*****", Toast.LENGTH_LONG).show();
-            }else if (msg.what == UPDATE_ok){
+            } else if (msg.what == UPDATE_ok) {
                 Toast.makeText(getApplicationContext(), "开始检测", Toast.LENGTH_LONG).show();
             }
         }
+
     };
 }
 
